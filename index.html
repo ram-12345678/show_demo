@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Stock Data for DLF</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Plotly CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center">Real-Time Stock Data for DLF</h1>
+        <div id="plotly-graph" class="my-4">
+            <div id="chart"></div>
+            <script>
+                var graphData = {{ graphJSON | safe }};
+                Plotly.newPlot('chart', graphData.data, graphData.layout);
+            </script>
+        </div>
+
+        <h2 class="mt-5">Recent Stock Data</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date and Time</th>
+                    <th>Open</th>
+                    <th>High</th>
+                    <th>Low</th>
+                    <th>Close</th>
+                    <th>Volume</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table_data %}
+                <tr>
+                    <td>{{ row['Datetime'] }}</td>
+                    <td>{{ row['Open'] }}</td>
+                    <td>{{ row['High'] }}</td>
+                    <td>{{ row['Low'] }}</td>
+                    <td>{{ row['Close'] }}</td>
+                    <td>{{ row['Volume'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
